@@ -6,7 +6,7 @@ on:
       KERNEL_BRANCH:
         description: 'KERNEL_BRANCH'
         required: true
-        default: 'android13-5.15'
+        default: 'ksun-5.15'
         type: choice
         options:
         - android13-5.15
@@ -14,7 +14,7 @@ on:
       KERNEL_OPTIONS:
         description: 'KERNEL_OPTIONS'
         required: true
-        default: 'NoRoot'
+        default: 'KernelSU'
         type: choice
         options:
         - NoRoot
@@ -22,11 +22,10 @@ on:
       KERNEL_VARIANT:
         description: 'KERNEL_VARIANT'
         required: true
-        default: 'GKI'
+        default: 'next-susfs'
         type: choice
         options:
-        - KSU-Next-GKI
-        - KSU-GKI
+        - next-susfs
 jobs:
   build:
     if: github.event.repository.owner.id == github.event.sender.id
