@@ -11,9 +11,6 @@ on:
         options:
         - android13-5.15
         - ksun-5.15
-        - ksun-5.15-dev
-        - ksun-5.15-stable
-        - ksun-5.15-next
       KERNEL_OPTIONS:
         description: 'KERNEL_OPTIONS'
         required: true
