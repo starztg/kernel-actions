@@ -76,6 +76,7 @@ jobs:
         curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
         chmod a+x ~/bin/repo
         sudo ln -sf ~/bin/repo /usr/bin/repo
+      continue-on-error: true
 
     - name: Init Repo
       run: |
@@ -104,11 +105,11 @@ jobs:
         
     - name: Free Storage
       run: |    
-       df -h
+        df -h
        
     - name: Free Memory
       run: |    
-       free -h   
+        free -h   
        
     - name: Building Kernel (NoRoot)
       if: github.event.inputs.KERNEL_OPTIONS == 'NoRoot'
