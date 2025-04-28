@@ -69,6 +69,7 @@ jobs:
       with:
         distribution: 'zulu'
         java-version: '11'
+      continue-on-error: true
 
     - name: Install repo
       run: |
@@ -84,15 +85,18 @@ jobs:
         cd ${GITHUB_WORKSPACE}
         git config --global user.name "archer-h61m"
         git config --global user.email "archer.h61m@gmail.com"
+      continue-on-error: true
     
     - name: Clone AnyKernel3
       run: |
         git clone https://github.com/Bricked-Development/AnyKernel3.git AnyKernel3
+      continue-on-error: true
 
     - name: Set Swap Space
       uses: pierotofy/set-swap-space@master
       with:
         swap-size-gb: 1
+      continue-on-error: true
     
     - name: Clone Kernel Tree & Clang
       run: |
@@ -102,6 +106,7 @@ jobs:
         cd ${GITHUB_WORKSPACE}/common
         chmod +x clang.sh
         ./clang.sh
+      continue-on-error: true
         
     - name: Free Storage
       run: |    
@@ -109,7 +114,8 @@ jobs:
        
     - name: Free Memory
       run: |    
-        free -h   
+        free -h
+      continue-on-error: true
        
     - name: Building Kernel (NoRoot)
       if: github.event.inputs.KERNEL_OPTIONS == 'NoRoot'
@@ -125,6 +131,7 @@ jobs:
         chmod +x scripts/build.sh
         make clean ARCH=arm64 && make mrproper ARCH=arm64 && rm -rf out/
         ./scripts/build.sh
+      continue-on-error: true
     
     
     - name: Building Kernel (KernelSU)
@@ -143,6 +150,7 @@ jobs:
         export CXX="ccache g++"
         make clean ARCH=arm64 && make mrproper ARCH=arm64 && rm -rf out/        
         ./scripts/build.sh
+      continue-on-error: true
 
     - name: Check Ccache
       run: |
@@ -152,22 +160,26 @@ jobs:
       run: | 
         cd ${GITHUB_WORKSPACE}/common/out/arch/arm64/boot
         cp Image.gz ${GITHUB_WORKSPACE}/AnyKernel3
+      continue-on-error: true
      
     - name: Get Kernel version
       run: |
         echo "$KERNEL_VERSION"
+      continue-on-error: true
     
     - name: Packing Zip (NoRoot)
       if: github.event.inputs.KERNEL_OPTIONS == 'NoRoot'
       run: |
         cd ${GITHUB_WORKSPACE}/AnyKernel3
         7z a $KERNEL_VERSION.zip *
+      continue-on-error: true
 
     - name: Packing Zip (KernelSU)
       if: github.event.inputs.KERNEL_OPTIONS == 'KernelSU'
       run: |
         cd ${GITHUB_WORKSPACE}/AnyKernel3
-        7z a $KERNEL_VERSION-${{ github.event.inputs.KERNEL_VARIANT }}.zip * 
+        7z a $KERNEL_VERSION-${{ github.event.inputs.KERNEL_VARIANT }}.zip *
+      continue-on-error: true
     
     - name: Publish to GitHub
       uses: softprops/action-gh-release@v1
