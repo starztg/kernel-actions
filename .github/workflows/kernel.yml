@@ -56,12 +56,10 @@ jobs:
         sudo apt -y install gperf gcc-multilib gcc-10-multilib g++-multilib g++-10-multilib libc6-dev x11proto-core-dev libx11-dev tree lib32z-dev libgl1-mesa-dev libxml2-utils xsltproc bc ccache lib32readline-dev lib32z1-dev liblz4-tool libncurses5-dev libsdl1.2-dev libxml2 lzop pngcrush schedtool squashfs-tools imagemagick libbz2-dev lzma ncftp qemu-user-static libstdc++-10-dev python3 bc bcc bison build-essential ccache curl flex g++-multilib gcc-multilib git git-lfs gnupg gperf imagemagick lib32readline-dev lib32z1-dev libelf-dev liblz4-tool libsdl1.2-dev libssl-dev libxml2 libxml2-utils lzop pngcrush rsync schedtool squashfs-tools xsltproc zip zlib1g-dev openjdk-11-jdk pahole dwarves bc cpio flex bison aptitude git python-is-python3 tar perl wget curl lz4 libelf-dev make aptitude libssl-dev openjdk-11-jdk
         sudo apt -y install pahole libelf-dev
         sudo apt -y install bc cpio flex bison git python-is-python3 tar perl wget curl lz4 libelf-dev
-        sudo hostnamectl set-hostname archer --static
       continue-on-error: true
       
     - name: Setup Aptitude
       run: |
-        hostnamectl
         sudo apt -y install aptitude p7zip-full ccache
         sudo aptitude -y install libssl-dev pahole
       continue-on-error: true
