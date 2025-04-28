@@ -30,9 +30,10 @@ on:
 jobs:
   build:
     if: github.event.repository.owner.id == github.event.sender.id
-    runs-on: ubuntu-24.04
+    runs-on: self-hosted
     permissions:
       contents: write
+    # runs-on: ubuntu-24.04
 
     steps:
     - name: Check Out
