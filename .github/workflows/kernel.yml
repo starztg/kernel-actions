@@ -26,6 +26,7 @@ on:
         type: choice
         options:
         - next-susfs
+        - next
 jobs:
   build:
     if: github.event.repository.owner.id == github.event.sender.id
