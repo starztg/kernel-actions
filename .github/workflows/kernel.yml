@@ -47,6 +47,7 @@ jobs:
         sudo timedatectl set-timezone Asia/Bangkok
         sudo dpkg-reconfigure tzdata
         echo "date=$(TZ=Asia/Bangkok date +%Y%m%d-%H%M)"
+      continue-on-error: true
         
     - name: Prepare the environment
       run: |
