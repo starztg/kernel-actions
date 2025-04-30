@@ -2,24 +2,7 @@ name: Build Kernel
 
 on:
   workflow_dispatch:
-   inputs:
-      KERNEL_OPTIONS:
-        description: 'KERNEL_OPTIONS'
-        required: true
-        default: 'KernelSU'
-        type: choice
-        options:
-        - NoRoot
-        - KernelSU
-      KERNEL_VARIANT:
-        description: 'KERNEL_VARIANT'
-        required: true
-        default: 'next-susfs'
-        type: choice
-        options:
-        - next-susfs
-        - next
-        - ksu
+  
 jobs:
   build:
     if: github.event.repository.owner.id == github.event.sender.id
@@ -30,9 +13,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [android13-5.15, ksu-next-stable, ksu-next-dev, ksu-stable, ksu-dev]
+        branch: [android13-5.15, ksu-next-stable, ksu-next-dev, ksu-stable, ksu-dev]
 
-    
     steps:
     - name: Check Out
       uses: actions/checkout@v4
@@ -99,7 +81,7 @@ jobs:
     - name: Clone Kernel Tree & Clang
       run: |
         cd ${GITHUB_WORKSPACE}
-        git clone -b ${{ matrix.target }} --depth=1 https://github.com/Bricked-Development/android_kernel_samsung_sm8550.git common
+        git clone -b ${{ matrix.branch }} --depth=1 https://github.com/Bricked-Development/android_kernel_samsung_sm8550.git common
         cp ${GITHUB_WORKSPACE}/clang.sh ${GITHUB_WORKSPACE}/common
         cd ${GITHUB_WORKSPACE}/common
         chmod +x clang.sh
@@ -114,26 +96,8 @@ jobs:
       run: |    
         free -h
       continue-on-error: true
-       
-    - name: Building Kernel (NoRoot)
-      if: github.event.inputs.KERNEL_OPTIONS == 'NoRoot'
-      run: |
-        cd ${GITHUB_WORKSPACE}/common
-        export USE_CCACHE=1
-        export CCACHE_EXEC=/usr/bin/ccache
-        export ALLOW_MISSING_DEPENDENCIES=true
-        ccache --max-size=50G
-        ccache -o compression=true
-        export KERNEL_VERSION=$(make kernelversion | awk '/^[0-9]/ {print $1}')
-        echo "KERNEL_VERSION=$KERNEL_VERSION" >> $GITHUB_ENV
-        chmod +x scripts/build.sh
-        make clean ARCH=arm64 && make mrproper ARCH=arm64 && rm -rf out/
-        ./scripts/build.sh
-      continue-on-error: true
     
-    
-    - name: Building Kernel (KernelSU)
-      if: github.event.inputs.KERNEL_OPTIONS == 'KernelSU'
+    - name: Building Kernel
       run: |
         cd ${GITHUB_WORKSPACE}/common
         export USE_CCACHE=1
@@ -164,19 +128,11 @@ jobs:
       run: |
         echo "$KERNEL_VERSION"
       continue-on-error: true
-    
-    - name: Packing Zip (NoRoot)
-      if: github.event.inputs.KERNEL_OPTIONS == 'NoRoot'
-      run: |
-        cd ${GITHUB_WORKSPACE}/AnyKernel3
-        7z a $KERNEL_VERSION.zip *
-      continue-on-error: true
 
-    - name: Packing Zip (KernelSU)
-      if: github.event.inputs.KERNEL_OPTIONS == 'KernelSU'
+    - name: Packing Zip
       run: |
         cd ${GITHUB_WORKSPACE}/AnyKernel3
-        7z a $KERNEL_VERSION-${{ matrix.target }}.zip *
+        7z a $KERNEL_VERSION-${{ matrix.branch }}.zip *
       continue-on-error: true
     
     - name: Publish to GitHub
