@@ -12,6 +12,8 @@ on:
         - android13-5.15
         - ksu-next-stable
         - ksu-next-dev
+        - ksu-stable
+        - ksu-dev
       KERNEL_OPTIONS:
         description: 'KERNEL_OPTIONS'
         required: true
