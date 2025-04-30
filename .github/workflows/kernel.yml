@@ -3,17 +3,6 @@ name: Build Kernel
 on:
   workflow_dispatch:
    inputs:
-      KERNEL_BRANCH:
-        description: 'KERNEL_BRANCH'
-        required: true
-        default: 'android13-5.15'
-        type: choice
-        options:
-        - android13-5.15
-        - ksu-next-stable
-        - ksu-next-dev
-        - ksu-stable
-        - ksu-dev
       KERNEL_OPTIONS:
         description: 'KERNEL_OPTIONS'
         required: true
