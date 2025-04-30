@@ -30,14 +30,20 @@ on:
         options:
         - next-susfs
         - next
+        - ksu
 jobs:
   build:
     if: github.event.repository.owner.id == github.event.sender.id
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     permissions:
       contents: write
     # runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [android13-5.15, ksu-next-stable, ksu-next-dev, ksu-stable, ksu-dev]
 
+    
     steps:
     - name: Check Out
       uses: actions/checkout@v4
@@ -104,7 +110,7 @@ jobs:
     - name: Clone Kernel Tree & Clang
       run: |
         cd ${GITHUB_WORKSPACE}
-        git clone -b ${{ github.event.inputs.KERNEL_BRANCH }} --depth=1 https://github.com/Bricked-Development/android_kernel_samsung_sm8550.git common
+        git clone -b ${{ matrix.target }} --depth=1 https://github.com/Bricked-Development/android_kernel_samsung_sm8550.git common
         cp ${GITHUB_WORKSPACE}/clang.sh ${GITHUB_WORKSPACE}/common
         cd ${GITHUB_WORKSPACE}/common
         chmod +x clang.sh
@@ -181,7 +187,7 @@ jobs:
       if: github.event.inputs.KERNEL_OPTIONS == 'KernelSU'
       run: |
         cd ${GITHUB_WORKSPACE}/AnyKernel3
-        7z a $KERNEL_VERSION-${{ github.event.inputs.KERNEL_VARIANT }}.zip *
+        7z a $KERNEL_VERSION-${{ matrix.target }}.zip *
       continue-on-error: true
     
     - name: Publish to GitHub
