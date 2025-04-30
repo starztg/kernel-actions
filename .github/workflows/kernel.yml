@@ -6,11 +6,12 @@ on:
       KERNEL_BRANCH:
         description: 'KERNEL_BRANCH'
         required: true
-        default: 'ksun-5.15'
+        default: 'android13-5.15'
         type: choice
         options:
         - android13-5.15
-        - ksun-5.15
+        - ksu-next-stable
+        - ksu-next-dev
       KERNEL_OPTIONS:
         description: 'KERNEL_OPTIONS'
         required: true
