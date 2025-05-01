@@ -81,7 +81,7 @@ jobs:
     - name: Clone Kernel Tree & Clang
       run: |
         cd ${GITHUB_WORKSPACE}
-        git clone -b ${{ matrix.branch }} --depth=1 https://github.com/chaptsand/android_kernel_samsung_sm8550.git
+        git clone https://github.com/chaptsand/android_kernel_samsung_sm8550.git
         cp ${GITHUB_WORKSPACE}/clang.sh ${GITHUB_WORKSPACE}/common
         cd ${GITHUB_WORKSPACE}/common
         chmod +x clang.sh
