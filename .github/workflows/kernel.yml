@@ -63,8 +63,8 @@ jobs:
       run: |
         export HOME=${GITHUB_WORKSPACE}
         cd ${GITHUB_WORKSPACE}
-        git config --global user.name "archer-h61m"
-        git config --global user.email "archer.h61m@gmail.com"
+        git config --global user.name "starztg"
+        git config --global user.email "starztg@gmail.com"
       continue-on-error: true
     
     - name: Clone AnyKernel3
@@ -81,7 +81,7 @@ jobs:
     - name: Clone Kernel Tree & Clang
       run: |
         cd ${GITHUB_WORKSPACE}
-        git clone -b ${{ matrix.branch }} --depth=1 https://github.com/Bricked-Development/android_kernel_samsung_sm8550.git common
+        git clone -b ${{ matrix.branch }} --depth=1 https://github.com/chaptsand/android_kernel_samsung_sm8550.git
         cp ${GITHUB_WORKSPACE}/clang.sh ${GITHUB_WORKSPACE}/common
         cd ${GITHUB_WORKSPACE}/common
         chmod +x clang.sh
