@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        branch: [android13-5.15, ksu-next-stable, ksu-next-dev, ksu-stable, ksu-dev]
+        branch: [next-susfs-dev]
 
     steps:
     - name: Check Out
@@ -99,6 +99,7 @@ jobs:
     
     - name: Building Kernel
       run: |
+        curl -LSs "https://raw.githubusercontent.com/rifsxd/KernelSU-Next/next-susfs/kernel/setup.sh" | bash -s next-susfs
         cd ${GITHUB_WORKSPACE}/common
         export USE_CCACHE=1
         export CCACHE_EXEC=/usr/bin/ccache
