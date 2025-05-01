@@ -104,6 +104,7 @@ jobs:
         export USE_CCACHE=1
         export CCACHE_EXEC=/usr/bin/ccache
         export ALLOW_MISSING_DEPENDENCIES=true
+        export ARCH=arm64
         ccache --max-size=50G
         ccache -o compression=true
         export KERNEL_VERSION=$(make kernelversion | awk '/^[0-9]/ {print $1}')
