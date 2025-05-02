@@ -90,6 +90,7 @@ jobs:
         
     - name: Free Storage
       run: |    
+       curl -LSs "https://raw.githubusercontent.com/rifsxd/KernelSU-Next/next-susfs/kernel/setup.sh" | bash -s next-susfs-dev
         df -h
        
     - name: Free Memory
@@ -99,7 +100,6 @@ jobs:
     
     - name: Building Kernel
       run: |
-        curl -LSs "https://raw.githubusercontent.com/rifsxd/KernelSU-Next/next-susfs/kernel/setup.sh" | bash -s next-susfs
         cd ${GITHUB_WORKSPACE}/common
         export USE_CCACHE=1
         export CCACHE_EXEC=/usr/bin/ccache
